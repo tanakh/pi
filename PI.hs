@@ -2,7 +2,6 @@
 module Main where
 
 import System.Environment
-import Debug.Trace
 
 main :: IO ()
 main = do
@@ -10,27 +9,31 @@ main = do
   case args of
     [n, d] -> do
       print $ sqrt' (read n) (read d)
-    [n] -> print $ calculatePI $ read n
-    _ -> putStrLn "usage: <number-of-digit>"
+    [n] -> do
+      print $ calculatePI $ read n
+    _ -> do
+      putStrLn "usage: <number-of-digit>"
 
 calculatePI :: Integer -> Integer
 calculatePI n = -- traceShow (p, q, t, c32) $
   c32 * q `div` (12 * t + 12 * a * q)
   where
-    (p, q, t) = compute 0 (n `div` 14)
-    c32 = sqrt' n (c^3)
+    (_, q, t) = compute 0 (n `div` 14)
+    c32 = sqrt' n c3
 
-a, b, c :: Integer
+a, b, c, c3, c3div24 :: Integer
 a = 13591409
 b = 545140134
 c = 640320
+c3 = c * c * c
+c3div24 = c3 `div` 24
 
 compute :: Integer -> Integer -> (Integer, Integer, Integer)
 compute n1 n2
   | n2 - n1 == 1 =
     let an2 = (if even n2 then 1 else (-1)) * (a + b * n2)
         pn2 = (2 * n2 - 1) * (6 * n2 - 5) * (6 * n2 - 1)
-        qn2 = n2 ^ 3 * c ^ 3 `div` 24
+        qn2 = n2 * n2 * n2 * c3div24
     in (pn2, qn2, an2 * pn2)
   | otherwise =
     let m = (n1 + n2) `div` 2
