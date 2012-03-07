@@ -20,7 +20,7 @@ sqrt2 d n = n * rsqrt2 d n
 rsqrt2 :: Integer -> Integer -> Integer
 rsqrt2 d n 
   | d < 8 = floor $ approx * 2 ^ d
-  | otherwise = iter 1 $ (floor $ approx * 2 ^ initd) `shiftL` (di - initd)
+  | otherwise = iter 8 $ (floor $ approx * 2 ^ initd) `shiftL` (di - initd)
   where
     di = fromInteger d
     initd = min 300 di
