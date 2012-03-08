@@ -2,6 +2,7 @@
 module PI (calculatePI2, calculatePI10) where
 
 import Data.Bits
+
 import Sqrt
 
 a, b, c, c3, c3div24 :: Integer
@@ -32,7 +33,7 @@ compute n1 n2
         qn2 = n2 * n2 * n2 * c3div24
     in (pn2, qn2, an2 * pn2)
   | otherwise =
-    let m = (n1 + n2) `shiftR` 1
-        (p1, q1, t1) = compute n1 m
-        (p2, q2, t2) = compute m n2
-    in (p1 * p2, q1 * q2, t1 * q2 + p1 * t2)
+      let m = (n1 + n2) `shiftR` 1
+          (p1, q1, t1) = compute n1 m
+          (p2, q2, t2) = compute m n2
+      in (p1 * p2, q1 * q2, t1 * q2 + p1 * t2)

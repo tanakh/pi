@@ -3,5 +3,5 @@ import PI
 
 main :: IO ()
 main = defaultMain
-  [ bench "pi" $ nf calculatePI10 100000
+  [ bench "pi" $ nf calculatePI10 1000000
   ]
